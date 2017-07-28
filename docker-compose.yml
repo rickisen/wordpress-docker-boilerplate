@@ -1,0 +1,35 @@
+version: "2"
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    ports:
+      - "127.0.0.1:3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: devpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    image: wordpress
+    volumes:
+      - ./wordpress/plugins/:/var/www/html/wp-content/plugins/
+      - ./wordpress/themes/:/var/www/html/wp-content/themes/
+      - ./wordpress/uploads/:/var/www/html/wp-content/uploads/
+      - ./conf/:/usr/local/etc/php/conf.d/
+    ports:
+      - "8080:80"
+    depends_on:
+      - "db"
+    hostname: wordpress
+    domainname: wordpress.dev
+    environment:
+      WORDPRESS_DB_PASSWORD: devpassword
+      WORDPRESS_DB_HOST: db:3306
+
+  adminer:
+    image: adminer
+    ports:
+      - "127.0.0.1:8000:8080"
