@@ -25,7 +25,7 @@ $ docker-compose up
 http://wordpress.dev:8080
 
 ### Dump db locally
-To save everything in the db to an sql file, run the supplied script.
+To save everything in the db to an sql file, run the supplied script. (you might want to change the name of the conatiner in the script)
 ```
 $ ./dumpDb.sh
 ```
